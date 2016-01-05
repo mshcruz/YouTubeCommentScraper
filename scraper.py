@@ -20,12 +20,14 @@ def get_comment_threads(youtube, video_id, comments):
     textFormat="plainText",
   ).execute()
 
+  #Get the first set of comments
   for item in results["items"]:
     threads.append(item)
     comment = item["snippet"]["topLevelComment"]
     text = comment["snippet"]["textDisplay"]
     comments.append(text)
 
+  #Keep getting comments from the following pages
   while ("nextPageToken" in results):
     results = youtube.commentThreads().list(
       part="snippet",
